@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="icon" type="image/png" href="https://www.gerflor.com.au/media/13-australia-website/quicksales-australia/faviconico.jpg">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="container">
+<h1 class="mt-5">Mini Caht</h1>
+<hr>
+<form id="miForm">
+<div class="row">
+    <div class="col-8">
+        <input type="text" id="txtMensaje" placeholder="Mensaje" class="form-control">
+    </div>
+    <div class="col-4">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+</div>
+</form>
+<div class="row">
+    <div class="col">
+        <ul id="misMensajes" class="mt-4">
+
+        </ul>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.2/socket.io.js" integrity="sha512-YybopSVjZU0fe8TY4YDuQbP5bhwpGBE/T6eBUEZ0usM72IWBfWrgVI13qfX4V2A/W7Hdqnm7PIOYOwP9YHnICw==" crossorigin="anonymous"></script>
+<script>
+    const socket = io('http://localhost:8080/')
+    //Elements of Dom
+    const form = document.querySelector('#miForm')
+    const mensajes = document.querySelector('#misMensajes')
+    const txtMensaje = document.querySelector('#txtMensaje')
+
+
+    form.addEventListener('submit',(e)=>{
+        e.preventDefault()
+
+        const newMessage = txtMensaje.value;
+
+        socket.emit('message-to-server', {txt: newMessage})
+
+    })
+
+
+    socket.on('message-from-server',(data)=>{
+        mensajes.innerHTML += `<li>${data.txt}</li>`
+    })
+
+    /*socket.on('mensaje-bienvenido', (data) => {
+        console.log(data)
+    })*/
+
+    /*setTimeout(()=>{
+        socket.emit('mensaje-client', {
+            client: 'David Fernando Valenzuela Pardo'
+        })
+    },2000)*/
+
+
+</script>
+</body>
+</html>
