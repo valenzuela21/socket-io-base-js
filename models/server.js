@@ -32,7 +32,7 @@ class Server{
         this.configSockets();
         //Listen server corriendo port 80
         this.server.listen(this.port, ()=>{
-            console.log('Server configuardo desde el PORT:8080')
+            console.log('Server configurado desde el PORT:8080')
         });
     }
 }
